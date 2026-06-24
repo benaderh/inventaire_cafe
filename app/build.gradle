@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    namespace 'com.cafe.inventaire'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.cafe.inventaire"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    signingConfigs {
+        release {
+            if (project.hasProperty('KEYSTORE_FILE')) {
+                storeFile file(KEYSTORE_FILE)
+                storePassword project.property('KEYSTORE_PASSWORD')
+                keyAlias project.property('KEY_ALIAS')
+                keyPassword project.property('KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.webkit:webkit:1.9.0'
+}
